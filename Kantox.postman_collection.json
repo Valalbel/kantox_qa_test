@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "9beee0f6-b5da-42fb-b28a-bd25a07f05c5",
+		"name": "Kantox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65ffa2fb-d04b-4409-bad6-441576af469f",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "apiusertest@kantox.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "!2018abde123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://demo.kantox.com/api/login",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"kantox",
+						"com"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check date fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "753c17af-2298-471f-bca8-bd1c166e4c8d",
+						"exec": [
+							"const jsonData = pm.response.json()[0];",
+							"",
+							"pm.test('Check field', function() {",
+							"  pm.expect(jsonData).to.have.property('createdStart');",
+							"  pm.expect(jsonData).to.have.property('createdEnd');",
+							"  pm.expect(jsonData).to.have.property('updatedStart');",
+							"  pm.expect(jsonData).to.have.property('updatedEnd');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-ACCESS-TOKEN",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://demo.kantox.com/api/companies/TXSDPPJV9/bank_accounts/index",
+					"protocol": "https",
+					"host": [
+						"demo",
+						"kantox",
+						"com"
+					],
+					"path": [
+						"api",
+						"companies",
+						"TXSDPPJV9",
+						"bank_accounts",
+						"index"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
